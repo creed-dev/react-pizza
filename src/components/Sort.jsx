@@ -1,10 +1,33 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const Sort = props => {
+const Sort = ({ items }) => {
+	const [isVisible, setIsVisible] = useState(false);
+	const [sortValue, setSortValue] = useState(0);
+	const sortRef = useRef();
+	useEffect(() => {
+		document.body.addEventListener('click', outsideClick);
+	}, []);
+
+	const toggleVisible = () => {
+		setIsVisible(!isVisible);
+	};
+
+	const outsideClick = e => {
+		if (!e.path.includes(sortRef.current)) {
+			setIsVisible(false);
+		}
+	};
+
+	const placeSortValue = index => {
+		setSortValue(index);
+		setIsVisible(false);
+	};
+
 	return (
-		<div className="sort">
+		<div ref={sortRef} className="sort">
 			<div className="sort__label">
 				<svg
+					className={isVisible ? 'disabled' : ''}
 					width="10"
 					height="6"
 					viewBox="0 0 10 6"
@@ -17,15 +40,25 @@ const Sort = props => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span>популярности</span>
+				<span onClick={() => toggleVisible()}>{items[sortValue]}</span>
 			</div>
-			<div className="sort__popup">
-				<ul>
-					<li className="active">популярности</li>
-					<li>цене</li>
-					<li>алфавиту</li>
-				</ul>
-			</div>
+			{isVisible && (
+				<div className="sort__popup">
+					<ul>
+						{items.map((item, index) => {
+							return (
+								<li
+									className={sortValue === index ? 'active' : ''}
+									key={`${item}_${index}`}
+									onClick={() => placeSortValue(index)}
+								>
+									{item}
+								</li>
+							);
+						})}
+					</ul>
+				</div>
+			)}
 		</div>
 	);
 };
