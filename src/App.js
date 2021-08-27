@@ -1,33 +1,25 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Content from './components/Content';
 import Header from './components/Header';
 import { setPizzasAC } from './redux/pizzas-reducer';
 
 const App = props => {
+	const dispatch = useDispatch();
+
 	useEffect(() => {
 		axios.get('http://localhost:3000/db.json').then(({ data }) => {
-			props.setPizzas(data.pizzas);
+			dispatch(setPizzasAC(data.pizzas));
 		});
 	}, []);
 
 	return (
 		<div className="wrapper">
 			<Header />
-			<Content pizzas={props.pizzas} />
+			<Content pizzas={[]} />
 		</div>
 	);
 };
 
-const mapStateToProps = state => {
-	return {
-		pizzas: state.pizzas.pizzas,
-	};
-};
-
-const mapDispatchToProps = dispatch => {
-	return { setPizzas: pizzas => dispatch(setPizzasAC(pizzas)) };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

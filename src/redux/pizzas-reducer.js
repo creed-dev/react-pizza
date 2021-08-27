@@ -3,7 +3,8 @@ const SET_PIZZAS = 'pizzas-reducer/SET_PIZZAS';
 
 // initial state
 const initialState = {
-	pizzas: [],
+	items: [],
+	isLoaded: false,
 };
 
 // reducer
@@ -12,7 +13,8 @@ export const pizzasReducer = (state = initialState, action) => {
 		case SET_PIZZAS:
 			return {
 				...state,
-				pizzas: action.pizzas,
+				items: action.pizzas,
+				isLoaded: true,
 			};
 		default:
 			return state;
