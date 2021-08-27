@@ -1,52 +1,53 @@
+import classNames from 'classnames';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCategoryAC } from '../redux/categories-reducer';
 
 const Categories = props => {
+	const dispatch = useDispatch();
+	const [activeCategory, setActiveCategory] = useState(null);
+
+	const onSelectCategory = index => {
+		setActiveCategory(index);
+		dispatch(setCategoryAC(index + 1));
+	};
+
+	const onSelectCategoryAll = () => {
+		setActiveCategory(null);
+		dispatch(setCategoryAC(0));
+	};
+
 	return (
 		<div className="categories">
 			<ul className="categories__list">
-				<NavLink
-					to="/all"
-					className="categories__item"
-					activeClassName="active"
+				<li
+					className={classNames(
+						{
+							active: activeCategory === null,
+						},
+						'categories__item'
+					)}
+					onClick={() => onSelectCategoryAll()}
 				>
 					Все
-				</NavLink>
-				<NavLink
-					to="/meat"
-					className="categories__item"
-					activeClassName="active"
-				>
-					Мясные
-				</NavLink>
-				<NavLink
-					to="/vegan"
-					className="categories__item"
-					activeClassName="active"
-				>
-					Вегетарианские
-				</NavLink>
-				<NavLink
-					to="/grill"
-					className="categories__item"
-					activeClassName="active"
-				>
-					Гриль
-				</NavLink>
-				<NavLink
-					to="/hot"
-					className="categories__item"
-					activeClassName="active"
-				>
-					Острые
-				</NavLink>
-				<NavLink
-					to="/closed"
-					className="categories__item"
-					activeClassName="active"
-				>
-					Закрытые
-				</NavLink>
+				</li>
+				{props.items.map((category, index) => {
+					return (
+						<li
+							key={`${category}_${index}`}
+							className={classNames(
+								{
+									active: activeCategory === index,
+								},
+								'categories__item'
+							)}
+							onClick={() => onSelectCategory(index)}
+						>
+							{category}
+						</li>
+					);
+				})}
 			</ul>
 		</div>
 	);

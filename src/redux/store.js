@@ -1,8 +1,10 @@
 import { combineReducers, createStore } from 'redux';
+import { categoriesReducer } from './categories-reducer';
 import { pizzasReducer } from './pizzas-reducer';
 
 const rootReducer = combineReducers({
 	pizzas: pizzasReducer,
+	categories: categoriesReducer,
 });
 
 let store = createStore(

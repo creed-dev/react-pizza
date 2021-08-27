@@ -17,7 +17,7 @@ const App = props => {
 	return (
 		<div className="wrapper">
 			<Header />
-			<Content pizzas={[]} />
+			<Content />
 		</div>
 	);
 };
