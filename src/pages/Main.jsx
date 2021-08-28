@@ -15,12 +15,38 @@ const Main = props => {
 			items: state.pizzas.items,
 			isLoaded: state.pizzas.isLoaded,
 			activeCategory: state.filters.category,
+			activeSort: state.filters.sortBy,
+			activeOrder: state.filters.order,
 		};
 	});
 
 	useEffect(() => {
-		dispatch(fetchPizzas(contentState.activeCategory));
-	}, [contentState.activeCategory]);
+		dispatch(
+			fetchPizzas(
+				contentState.activeCategory,
+				contentState.activeSort,
+				contentState.activeOrder
+			)
+		);
+	}, [contentState.activeCategory, contentState.activeSort]);
+
+	const sortItems = [
+		{
+			name: 'популярности',
+			sortBy: 'rating',
+			order: 'desc',
+		},
+		{
+			name: 'цене',
+			sortBy: 'price',
+			order: 'desc',
+		},
+		{
+			name: 'алфавиту',
+			sortBy: 'name',
+			order: 'asc',
+		},
+	];
 
 	return (
 		<div>
@@ -38,7 +64,7 @@ const Main = props => {
 							]}
 							activeCategory={contentState.activeCategory}
 						/>
-						<Sort items={['популярности', 'цене', 'алфавиту']} />
+						<Sort items={sortItems} activeSort={contentState.activeSort} />
 					</div>
 					<h2 className="content__title">Все пиццы</h2>
 					<div className="content__items">

@@ -1,9 +1,12 @@
 // action types
 const SET_CATEGORIE = 'categories-reducer/SET_CATEGORIE';
+const SET_SORT = 'categories-reducer/SET_SORT';
 
 // initial state
 const initialState = {
 	category: null,
+	sortBy: 'rating',
+	order: 'desc',
 };
 
 // reducer
@@ -14,6 +17,12 @@ export const filtersReducer = (state = initialState, action) => {
 				...state,
 				category: action.payload,
 			};
+		case SET_SORT:
+			return {
+				...state,
+				sortBy: action.sortBy,
+				order: action.order,
+			};
 		default:
 			return state;
 	}
@@ -23,4 +32,10 @@ export const filtersReducer = (state = initialState, action) => {
 export const setCategoryAC = payload => ({
 	type: SET_CATEGORIE,
 	payload,
+});
+
+export const setSortByAC = (sortBy, order) => ({
+	type: SET_SORT,
+	sortBy,
+	order,
 });

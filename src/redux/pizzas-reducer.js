@@ -42,15 +42,18 @@ export const setLoadedAC = payload => ({
 
 // redux-thunks
 
-export const fetchPizzas = activeCategory => dispatch => {
-	dispatch(setLoadedAC(false));
-	axios
-		.get(
-			`http://localhost:3001/pizzas${
-				activeCategory !== null ? `?category=${activeCategory}` : ''
-			}`
-		)
-		.then(({ data }) => {
-			dispatch(setPizzasAC(data));
-		});
-};
+export const fetchPizzas =
+	(activeCategory, activeSort, activeOrder) => dispatch => {
+		dispatch(setLoadedAC(false));
+		axios
+			.get(
+				`http://localhost:3001/pizzas${
+					activeCategory !== null
+						? `?category=${activeCategory}&_sort=${activeSort}&_order=${activeOrder}`
+						: `?_sort=${activeSort}&_order=${activeOrder}`
+				}`
+			)
+			.then(({ data }) => {
+				dispatch(setPizzasAC(data));
+			});
+	};

@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSortByAC } from '../redux/filters-reducer';
 
-const Sort = ({ items }) => {
+const Sort = ({ items, activeSort }) => {
 	const [isVisible, setIsVisible] = useState(false);
-	const [sortValue, setSortValue] = useState(0);
 	const sortRef = useRef();
 	useEffect(() => {
 		document.body.addEventListener('click', outsideClick);
 	}, []);
+	const dispatch = useDispatch();
 
 	const toggleVisible = () => {
 		setIsVisible(!isVisible);
@@ -18,10 +20,12 @@ const Sort = ({ items }) => {
 		}
 	};
 
-	const placeSortValue = index => {
-		setSortValue(index);
+	const placeSortValue = (sortBy, order) => {
 		setIsVisible(false);
+		dispatch(setSortByAC(sortBy, order));
 	};
+
+	const sortItem = items.find(sortItem => sortItem.sortBy === activeSort);
 
 	return (
 		<div ref={sortRef} className="sort">
@@ -40,19 +44,20 @@ const Sort = ({ items }) => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span onClick={() => toggleVisible()}>{items[sortValue]}</span>
+				<span onClick={() => toggleVisible()}>{sortItem.name}</span>
 			</div>
+
 			{isVisible && (
 				<div className="sort__popup">
 					<ul>
 						{items.map((item, index) => {
 							return (
 								<li
-									className={sortValue === index ? 'active' : ''}
-									key={`${item}_${index}`}
-									onClick={() => placeSortValue(index)}
+									className={activeSort === item.sortBy ? 'active' : ''}
+									key={`${item.name}_${index}`}
+									onClick={() => placeSortValue(item.sortBy, item.order)}
 								>
-									{item}
+									{item.name}
 								</li>
 							);
 						})}
