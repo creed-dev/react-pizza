@@ -3,11 +3,11 @@ const SET_CATEGORIE = 'categories-reducer/SET_CATEGORIE';
 
 // initial state
 const initialState = {
-	category: 0,
+	category: null,
 };
 
 // reducer
-export const categoriesReducer = (state = initialState, action) => {
+export const filtersReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_CATEGORIE:
 			return {

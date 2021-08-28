@@ -1,5 +1,8 @@
+import axios from 'axios';
+
 // action types
 const SET_PIZZAS = 'pizzas-reducer/SET_PIZZAS';
+const SET_LOADED = 'pizzas-reducer/SET_LOADED';
 
 // initial state
 const initialState = {
@@ -16,6 +19,11 @@ export const pizzasReducer = (state = initialState, action) => {
 				items: action.pizzas,
 				isLoaded: true,
 			};
+		case SET_LOADED:
+			return {
+				...state,
+				isLoaded: action.payload,
+			};
 		default:
 			return state;
 	}
@@ -26,3 +34,23 @@ export const setPizzasAC = pizzas => ({
 	type: SET_PIZZAS,
 	pizzas,
 });
+
+export const setLoadedAC = payload => ({
+	type: SET_LOADED,
+	payload,
+});
+
+// redux-thunks
+
+export const fetchPizzas = activeCategory => dispatch => {
+	dispatch(setLoadedAC(false));
+	axios
+		.get(
+			`http://localhost:3001/pizzas${
+				activeCategory !== null ? `?category=${activeCategory}` : ''
+			}`
+		)
+		.then(({ data }) => {
+			dispatch(setPizzasAC(data));
+		});
+};
