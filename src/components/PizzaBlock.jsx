@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 
-const PizzaBlock = ({ pizza }) => {
+const PizzaBlock = ({ pizza, onClickAddPizza, addedCount }) => {
 	const availableTypes = ['тонкое', 'традиционное'];
 	const [activeType, setActiveType] = useState(pizza.types[0]);
 	const availableSizes = [26, 30, 40];
@@ -13,6 +13,18 @@ const PizzaBlock = ({ pizza }) => {
 
 	const onSelectSize = size => {
 		setActiveSizes(size);
+	};
+
+	const addToCart = () => {
+		const obj = {
+			id: pizza.id,
+			name: pizza.name,
+			imageUrl: pizza.imageUrl,
+			price: pizza.price,
+			size: activeSize,
+			type: availableTypes[activeType],
+		};
+		onClickAddPizza(obj);
 	};
 
 	return (
@@ -51,9 +63,6 @@ const PizzaBlock = ({ pizza }) => {
 							</li>
 						);
 					})}
-					{/* <li className="active">26 см.</li>
-					<li>30 см.</li>
-					<li>40 см.</li> */}
 				</ul>
 			</div>
 			<div className="pizza-block__bottom">
@@ -71,8 +80,8 @@ const PizzaBlock = ({ pizza }) => {
 							fill="white"
 						/>
 					</svg>
-					<span>Добавить</span>
-					<i>2</i>
+					<span onClick={addToCart}>Добавить</span>
+					{addedCount && <i>{addedCount}</i>}
 				</div>
 			</div>
 		</div>

@@ -5,6 +5,7 @@ import PizzasLoader from '../components/common/PizzasLoader';
 import Header from '../components/Header';
 import PizzaBlock from '../components/PizzaBlock';
 import Sort from '../components/Sort';
+import { addToCartAC } from '../redux/cart-reducer';
 import { fetchPizzas } from '../redux/pizzas-reducer';
 
 const Main = props => {
@@ -17,6 +18,7 @@ const Main = props => {
 			activeCategory: state.filters.category,
 			activeSort: state.filters.sortBy,
 			activeOrder: state.filters.order,
+			cartItems: state.cart.items,
 		};
 	});
 
@@ -47,6 +49,12 @@ const Main = props => {
 			order: 'asc',
 		},
 	];
+
+	const addPizzaToCart = obj => {
+		dispatch(addToCartAC(obj));
+	};
+
+	console.log(contentState.cartItems);
 
 	return (
 		<div>
@@ -80,7 +88,17 @@ const Main = props => {
 									);
 								})}
 						{contentState.items.map(pizza => {
-							return <PizzaBlock key={`${pizza}_${pizza.id}`} pizza={pizza} />;
+							return (
+								<PizzaBlock
+									onClickAddPizza={addPizzaToCart}
+									key={`${pizza}_${pizza.id}`}
+									pizza={pizza}
+									addedCount={
+										contentState.cartItems[pizza.id] &&
+										contentState.cartItems[pizza.id].length
+									}
+								/>
+							);
 						})}
 					</div>
 				</div>
