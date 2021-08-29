@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Categories from '../components/Categories';
 import PizzasLoader from '../components/common/PizzasLoader';
-import Header from '../components/Header';
 import PizzaBlock from '../components/PizzaBlock';
 import Sort from '../components/Sort';
 import { addToCartAC } from '../redux/cart-reducer';
@@ -58,7 +57,6 @@ const Main = props => {
 
 	return (
 		<div>
-			<Header />
 			<div className="content">
 				<div className="container">
 					<div className="content__top">
