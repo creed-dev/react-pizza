@@ -53,8 +53,6 @@ const Main = props => {
 		dispatch(addToCartAC(obj));
 	};
 
-	console.log(contentState.cartItems);
-
 	return (
 		<div>
 			<div className="content">

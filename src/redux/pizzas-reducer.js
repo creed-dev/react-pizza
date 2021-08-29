@@ -41,13 +41,12 @@ export const setLoadedAC = payload => ({
 });
 
 // redux-thunks
-
 export const fetchPizzas =
 	(activeCategory, activeSort, activeOrder) => dispatch => {
 		dispatch(setLoadedAC(false));
 		axios
 			.get(
-				`http://localhost:3001/pizzas${
+				`/pizzas${
 					activeCategory !== null
 						? `?category=${activeCategory}&_sort=${activeSort}&_order=${activeOrder}`
 						: `?_sort=${activeSort}&_order=${activeOrder}`
