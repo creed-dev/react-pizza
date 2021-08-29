@@ -3,7 +3,7 @@ const ADD_TO_CART = 'cart-reducer/ADD_TO_CART';
 
 // initial state
 const initialState = {
-	totalCount: null,
+	totalCount: 0,
 	totalPrice: 0,
 	items: {},
 };
@@ -27,7 +27,7 @@ export const cartReducer = (state = initialState, action) => {
 			return {
 				...state,
 				items: newItems,
-				totalCount: ++state.totalCount,
+				totalCount: allItems.length,
 				totalPrice: totalPriceAllItems,
 			};
 		default:
