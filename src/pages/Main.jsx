@@ -91,7 +91,7 @@ const Main = props => {
 									pizza={pizza}
 									addedCount={
 										contentState.cartItems[pizza.id] &&
-										contentState.cartItems[pizza.id].length
+										contentState.cartItems[pizza.id].items.length
 									}
 								/>
 							);
