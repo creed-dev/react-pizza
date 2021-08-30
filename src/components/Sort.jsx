@@ -2,13 +2,31 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSortByAC } from '../redux/filters-reducer';
 
-const Sort = ({ items, activeSort }) => {
+const Sort = ({ activeSort }) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const sortRef = useRef();
 	useEffect(() => {
 		document.body.addEventListener('click', outsideClick);
 	}, []);
 	const dispatch = useDispatch();
+
+	const sortItems = [
+		{
+			name: 'популярности',
+			sortBy: 'rating',
+			order: 'desc',
+		},
+		{
+			name: 'цене',
+			sortBy: 'price',
+			order: 'desc',
+		},
+		{
+			name: 'алфавиту',
+			sortBy: 'name',
+			order: 'asc',
+		},
+	];
 
 	const toggleVisible = () => {
 		setIsVisible(!isVisible);
@@ -26,7 +44,7 @@ const Sort = ({ items, activeSort }) => {
 		dispatch(setSortByAC(sortBy, order));
 	};
 
-	const sortItem = items.find(sortItem => sortItem.sortBy === activeSort);
+	const sortItem = sortItems.find(sortItem => sortItem.sortBy === activeSort);
 
 	return (
 		<div ref={sortRef} className="sort">
@@ -51,7 +69,7 @@ const Sort = ({ items, activeSort }) => {
 			{isVisible && (
 				<div className="sort__popup">
 					<ul>
-						{items.map((item, index) => {
+						{sortItems.map((item, index) => {
 							return (
 								<li
 									className={activeSort === item.sortBy ? 'active' : ''}

@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 const PizzaBlock = ({ pizza, onClickAddPizza, addedCount }) => {
-	const availableTypes = ['тонкое', 'традиционное'];
 	const [activeType, setActiveType] = useState(pizza.types[0]);
-	const availableSizes = [26, 30, 40];
 	const [activeSize, setActiveSizes] = useState(pizza.sizes[0]);
+
+	const availableTypes = ['тонкое', 'традиционное'];
+	const availableSizes = [26, 30, 40];
 
 	const onSelectType = index => {
 		setActiveType(index);

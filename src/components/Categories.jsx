@@ -3,8 +3,16 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setCategoryAC } from '../redux/filters-reducer';
 
-const Categories = props => {
+const Categories = ({ activeCategory }) => {
 	const dispatch = useDispatch();
+
+	const categoriesItems = [
+		'Мясные',
+		'Вегетарианские',
+		'Гриль',
+		'Острые',
+		'Закрытые',
+	];
 
 	const onSelectCategory = index => {
 		dispatch(setCategoryAC(index));
@@ -20,7 +28,7 @@ const Categories = props => {
 				<li
 					className={classNames(
 						{
-							active: props.activeCategory === null,
+							active: activeCategory === null,
 						},
 						'categories__item'
 					)}
@@ -28,13 +36,13 @@ const Categories = props => {
 				>
 					Все
 				</li>
-				{props.items.map((category, index) => {
+				{categoriesItems.map((category, index) => {
 					return (
 						<li
 							key={`${category}_${index}`}
 							className={classNames(
 								{
-									active: props.activeCategory === index,
+									active: activeCategory === index,
 								},
 								'categories__item'
 							)}

@@ -9,18 +9,16 @@ import { fetchPizzas } from '../redux/pizzas-reducer';
 
 const Main = props => {
 	const dispatch = useDispatch();
-
-	const contentState = useSelector(state => {
+	const contentState = useSelector(({ pizzas, filters, cart }) => {
 		return {
-			items: state.pizzas.items,
-			isLoaded: state.pizzas.isLoaded,
-			activeCategory: state.filters.category,
-			activeSort: state.filters.sortBy,
-			activeOrder: state.filters.order,
-			cartItems: state.cart.items,
+			items: pizzas.items,
+			isLoaded: pizzas.isLoaded,
+			activeCategory: filters.category,
+			activeSort: filters.sortBy,
+			activeOrder: filters.order,
+			cartItems: cart.items,
 		};
 	});
-
 	useEffect(() => {
 		dispatch(
 			fetchPizzas(
@@ -31,24 +29,6 @@ const Main = props => {
 		);
 	}, [contentState.activeCategory, contentState.activeSort]);
 
-	const sortItems = [
-		{
-			name: 'популярности',
-			sortBy: 'rating',
-			order: 'desc',
-		},
-		{
-			name: 'цене',
-			sortBy: 'price',
-			order: 'desc',
-		},
-		{
-			name: 'алфавиту',
-			sortBy: 'name',
-			order: 'asc',
-		},
-	];
-
 	const addPizzaToCart = obj => {
 		dispatch(addToCartAC(obj));
 	};
@@ -58,17 +38,8 @@ const Main = props => {
 			<div className="content">
 				<div className="container">
 					<div className="content__top">
-						<Categories
-							items={[
-								'Мясные',
-								'Вегетарианские',
-								'Гриль',
-								'Острые',
-								'Закрытые',
-							]}
-							activeCategory={contentState.activeCategory}
-						/>
-						<Sort items={sortItems} activeSort={contentState.activeSort} />
+						<Categories activeCategory={contentState.activeCategory} />
+						<Sort activeSort={contentState.activeSort} />
 					</div>
 					<h2 className="content__title">Все пиццы</h2>
 					<div className="content__items">
