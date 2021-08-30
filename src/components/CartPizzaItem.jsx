@@ -1,13 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { removeCartAC } from '../redux/cart-reducer';
 
 const CartPizzaItem = ({
-	id,
-	name,
-	type,
-	size,
-	imageUrl,
+	obj,
 	totalPrice,
 	totalCount,
 	onRemoveCartItem,
@@ -15,25 +9,25 @@ const CartPizzaItem = ({
 	onPlusCartItem,
 }) => {
 	const handleRemoveCartItem = () => {
-		onRemoveCartItem(id);
+		onRemoveCartItem(obj.id);
 	};
 
 	const handleMinusCartItem = () => {
-		onMinusCartItem(id);
+		onMinusCartItem(obj.id);
 	};
 
 	const handlePlusCartItem = () => {
-		onPlusCartItem(id);
+		onPlusCartItem(obj.id);
 	};
 	return (
 		<div className="cart__item">
 			<div className="cart__item-img">
-				<img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+				<img className="pizza-block__image" src={obj.imageUrl} alt="Pizza" />
 			</div>
 			<div className="cart__item-info">
-				<h3>{name}</h3>
+				<h3>{obj.name}</h3>
 				<p>
-					{type} тесто, {size} см.
+					{obj.type} тесто, {obj.size} см.
 				</p>
 			</div>
 			<div className="cart__item-count">

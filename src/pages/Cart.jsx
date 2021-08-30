@@ -1,9 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import CartEmpty from '../components/CartEmpty';
 import CartNotEmpty from '../components/CartNotEmpty';
-import CartPizzaItem from '../components/CartPizzaItem';
 import {
 	minusCartItemAC,
 	plusCartItemAC,
@@ -18,6 +16,7 @@ const Cart = props => {
 	const addedPizza = Object.keys(items).map(key => {
 		return items[key].items[0];
 	});
+
 	const onRemoveCart = () => {
 		if (window.confirm('Вы действительно хотите очистить всю корзину?')) {
 			dispatch(removeCartAC());

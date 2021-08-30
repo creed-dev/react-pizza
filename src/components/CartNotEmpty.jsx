@@ -97,11 +97,7 @@ const CartNotEmpty = ({
 				{addedPizza.map(obj => {
 					return (
 						<CartPizzaItem
-							id={obj.id}
-							name={obj.name}
-							type={obj.type}
-							size={obj.size}
-							imageUrl={obj.imageUrl}
+							obj={obj}
 							totalPrice={items[obj.id].totalPrice}
 							totalCount={items[obj.id].items.length}
 							onRemoveCartItem={onRemoveCartItem}

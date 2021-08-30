@@ -11,7 +11,7 @@ const initialState = {
 };
 
 // reducer
-export const pizzasReducer = (state = initialState, action) => {
+export const pizzas = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_PIZZAS:
 			return {
